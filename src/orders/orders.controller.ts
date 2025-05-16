@@ -7,7 +7,7 @@ import { ChangeOrderStatusDto } from './dto';
 
 @Controller()
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(private readonly ordersService: OrdersService) { }
 
   @MessagePattern('createOrder')
   create(@Payload() createOrderDto: CreateOrderDto) {
@@ -15,19 +15,18 @@ export class OrdersController {
   }
 
   @MessagePattern('findAllOrders')
-  findAll(@Payload() orderPaginationDto: OrderPaginationDto ) {
+  findAll(@Payload() orderPaginationDto: OrderPaginationDto) {
     return this.ordersService.findAll(orderPaginationDto);
   }
 
   @MessagePattern('findOneOrder')
-  findOne(@Payload('id', ParseUUIDPipe ) id: string) {
+  findOne(@Payload('id', ParseUUIDPipe) id: string) {
     return this.ordersService.findOne(id);
   }
 
   @MessagePattern('changeOrderStatus')
-  changeOrderStatus(@Payload() changeOrderStatusDto: ChangeOrderStatusDto ) {
+  changeOrderStatus(@Payload() changeOrderStatusDto: ChangeOrderStatusDto) {
     return this.ordersService.changeStatus(changeOrderStatusDto)
-
   }
 
 }

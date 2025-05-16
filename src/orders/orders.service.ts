@@ -18,7 +18,7 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
   }
 
   create(createOrderDto: CreateOrderDto) {
-    
+
     return this.order.create({
       data: createOrderDto
     })
@@ -39,7 +39,7 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
 
     return {
       data: await this.order.findMany({
-        skip: ( currentPage - 1 ) * perPage,
+        skip: (currentPage - 1) * perPage,
         take: perPage,
         where: {
           status: orderPaginationDto.status
@@ -48,11 +48,10 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
       meta: {
         total: totalPages,
         page: currentPage,
-        lastPage: Math.ceil( totalPages / perPage )
+        lastPage: Math.ceil(totalPages / perPage)
       }
     }
   }
-  
 
   async findOne(id: string) {
 
@@ -60,10 +59,10 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
       where: { id }
     });
 
-    if ( !order ) {
-      throw new RpcException({ 
-        status: HttpStatus.NOT_FOUND, 
-        message: `Order with id ${ id } not found`
+    if (!order) {
+      throw new RpcException({
+        status: HttpStatus.NOT_FOUND,
+        message: `Order with id ${id} not found`
       });
     }
 
@@ -76,7 +75,7 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
     const { id, status } = changeOrderStatusDto;
 
     const order = await this.findOne(id);
-    if ( order.status === status ) {
+    if (order.status === status) {
       return order;
     }
 
@@ -85,9 +84,6 @@ export class OrdersService extends PrismaClient implements OnModuleInit {
       data: { status: status }
     });
 
-
   }
-
-
 
 }
